@@ -7,19 +7,19 @@
   <link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>
-  <div class="container">
+<div class="container">
   <h1>Coffee Finder:</h1>
   <form action="#" name="searchForm" class="search">
     <label for="search-city">City:</label>
     <input type="text" name="cityname" id="search-city" required/>
     <button type="submit">Search</button>
   </form>
+  <div id="map-canvas"></div>
   <main role="main" class="js-output" aria-live="assertive" hidden>
-    <div id="map"></div>
   </main>
   </div>
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAu7OSFPSks5queymfz10wpVsEr4qsd0RY&libraries=places"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 <script type="text/javascript" src="app.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZMsGoEv2OIkAWtGTpQtQRf9ngUzTsDj4&libraries=places&callback=initMap" async defer ></script>
 </body>
 </html>

@@ -1,61 +1,33 @@
-const GOOGLE_URL = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAu7OSFPSks5queymfz10wpVsEr4qsd0RY&callback=initMap"
-let map;
-let service;
-let infowindow;
-let geocoder;
-function initialize() {
-  geocoder = new google.maps.Geocoder();
-  let latlng = new google.maps.LatLng(40.6700, -73.9400);
-  let mapOptions = {
-    zoom: 8,
-    center: latlng
-  }
-  map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-}
+let map, infoWindow;
+let allow = false;
+let pos = {
+  lat: 39.290,
+  lng: 76,612
+};
 
-function getLocation(location){
-  geocoder.geocode( {
-    "address": address
-  },
-  function(results,status){
-    if (status == google.maps.GeocoderStatus.OK){
-      map.setCenter(results[0].geometry.location);
-      var marker = new google.maps.Marker({
-        map: map,
-        position: results.geometry.location
-      });
-    } else {
-    }
-  });
-}
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position){
+       pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
 
-google.maps.event.addDOMListner(window,"load",initialize);
-function getDataFromApi (cityInput,callback){
-  const request = {
+      infoWindow.setPosition(pos);
+      infoWindow.setContent("You are here.");
+      infoWindow.open(map);
+      map.setCenter(pos);
+    }, function(){
+      handleLocationError(true, infoWindow, map.getCenter());
 
-  }
-}
-$.getJSON(GOOGLE_URL,request,callback);
-
-$(document).ready(function() {
-    $("#map-address-btn").click(function(event){
-      event.preventDefault();     
-      var address = $("#location-address").val();         
-      codeAddress(address);                  
     });
-  });
-/* function renderResults(result){
-
+  } else {
+    handleLocationError(false, infoWindow, map.getCenter();)
+  }
 }
-*/
-
-function watchSubmit() {
-  $("search").submit(event => {
-    event.preventDefault();
-    const address = $("#search-city").val();
-    codeAddress(address);
-  });
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+'Error: The Geolocation service failed.' :
+'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
 }
-
-$(watchSubmit);
-
