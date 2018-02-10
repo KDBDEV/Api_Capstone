@@ -9,14 +9,9 @@
 <body>
 <div class="container">
   <h1>Coffee Finder:</h1>
-  <form action="#" name="searchForm" class="search">
-    <label for="search-city">City:</label>
-    <input type="text" name="cityname" id="search-city" required/>
-    <button type="submit">Search</button>
-  </form>
-  <div id="map"></div>
-  <main role="main" class="js-output" aria-live="assertive" hidden>
-  </main>
+    <input type="text" name="searchBox" id="searchBox" placeholder="Seach for cafes near you."/>
+    <div id="map"></div>
+    <div id="placeInfo"> Place Info Will Show Up Here! </div>
   </div>
 <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 <script src="app.js"></script>
