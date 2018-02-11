@@ -1,53 +1,24 @@
-//declares map and infowindow as empty variables
+//declares map var
 var map, infoWindow;
 // initializes the first map to be rendered to the user
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 39.2904, lng: -76.6122},          
     zoom: 15,
-    fullscreenControl: false
 });
 
 var input = document.getElementById("searchBox");
-
 var searchBox = new google.maps.places.SearchBox(input);
 infoWindow = new google.maps.InfoWindow;
-//geolocation logic
-if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(function(position) {
-     var pos = {
-        lat: position.coords.latitude,
-         lng: position.coords.longitude
-      };
 
-   infoWindow.setPosition(pos);
-    infoWindow.setContent('Location found.');
-    infoWindow.open(map);
-    map.setCenter(pos);
-     }, function() {
-      handleLocationError(true, infoWindow, map.getCenter());
-    });
- } else {
-   // Browser doesn't support Geolocation
-     handleLocationError(false, infoWindow, map.getCenter());
-  }
-}
-// displays to user geolocation has failed
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-  infoWindow.setPosition(pos);
-  infoWindow.setContent(browserHasGeolocation ?
-  'Error: The Geolocation service failed.' :
-  'Error: Your browser doesn\'t support geolocation.');
-  infoWindow.open(map);
-}
-//checks for bounds to change and sets new bounds
 map.addListener('bounds_changed', function() {
     searchBox.setBounds(map.getBounds());
   });
-//storing location markers
+
+// stores the location markers we add
 var markers = [];
 
-//searchBox Listener
+// below is the listener for the searchBox
 searchBox.addListener('places_changed', function() {
     var places = searchBox.getPlaces();
     console.log(places[0]);
@@ -115,3 +86,32 @@ searchBox.addListener('places_changed', function() {
 });
     
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+//geolocation logic
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(function(position) {
+     var pos = {
+        lat: position.coords.latitude,
+         lng: position.coords.longitude
+      };
+
+   infoWindow.setPosition(pos);
+    infoWindow.setContent('Location found.');
+    infoWindow.open(map);
+    map.setCenter(pos);
+     }, function() {
+      handleLocationError(true, infoWindow, map.getCenter());
+    });
+ } else {
+   // Browser doesn't support Geolocation
+     handleLocationError(false, infoWindow, map.getCenter());
+  }
+
+}
+// displays to user geolocation has failed
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(browserHasGeolocation ?
+  'Error: The Geolocation service failed.' :
+  'Error: Your browser doesn\'t support geolocation.');
+  infoWindow.open(map);
+}
