@@ -3,16 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>API Capstone</title>
+  <title>Coffee Finder</title>
   <link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>
-<div class="container">
+  <header>
   <h1>Coffee Finder:</h1>
+  <form class="search-bar">
+    <label for="query"></label>
     <input type="text" name="searchBox" id="searchBox" placeholder="Seach for cafes near you."/>
+    <button type="submit"></button>
+  </form>
+</header>
+<main>
     <div id="map"></div>
     <div id="placeInfo"> Place Info Will Show Up Here! </div>
-  </div>
+</main>
 <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 <script src="app.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhzMPUFxKG3VTooZrZ0ZKU_9zy3cCWJJE&libraries=places&callback=initMap" async defer></script>

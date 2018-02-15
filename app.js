@@ -1,9 +1,13 @@
 //declares map var
 var map, infoWindow;
+var pos = {
+  lat: 39.2904,
+  lng: -76.6122
+};
 // initializes the first map to be rendered to the user
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 39.2904, lng: -76.6122},          
+    center: pos,         
     zoom: 15,
 });
 
@@ -11,10 +15,27 @@ var input = document.getElementById("searchBox");
 var searchBox = new google.maps.places.SearchBox(input);
 infoWindow = new google.maps.InfoWindow;
 
+var request = {
+  location: pos,
+  radius: "500",
+  query: "cafe"
+};
+
 map.addListener('bounds_changed', function() {
     searchBox.setBounds(map.getBounds());
+    // Preform a request with nearby, hard coded keyword cafe
+    service = new google.maps.places.PlacesService(map);
+    service.textSearch(request, callback);
   });
-
+// callback for query
+function callback(results, status) {
+  if (status == google.maps.places.PlacesServiceStatus.OK) {
+    for (var i = 0; i < results.length; i++) {
+      var place = results[i];
+      createMarker(results[i]);
+    }
+  }
+}
 // stores the location markers we add
 var markers = [];
 
